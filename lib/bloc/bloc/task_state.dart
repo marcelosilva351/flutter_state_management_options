@@ -9,3 +9,8 @@ class TasksLoadedState extends TaskState {
   List<TaskModel> tasks;
   TasksLoadedState(this.tasks);
 }
+
+class ErrorState extends TaskState {
+  String messageError;
+  ErrorState(this.messageError);
+}
