@@ -24,7 +24,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     });
 
     on<updateTask>((event, emit) async {
-      var resultUpdate = await repo.insertTask(event.task);
+      var resultUpdate = await repo.updateTask(event.task);
       if (resultUpdate) {
         add(GetAllTasks());
         return;
@@ -33,7 +33,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     });
 
     on<deleteTask>((event, emit) async {
-      var resultDelete = await repo.insertTask(event.task);
+      var resultDelete = await repo.deleteTask(event.task.id);
       if (resultDelete) {
         add(GetAllTasks());
         return;
