@@ -18,7 +18,27 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       var resultAddTask = await repo.insertTask(event.task);
       if (resultAddTask) {
         add(GetAllTasks());
+        return;
       }
+      emit(ErrorState("Erro ao tentar adicioanr nova tarefa"));
+    });
+
+    on<updateTask>((event, emit) async {
+      var resultUpdate = await repo.insertTask(event.task);
+      if (resultUpdate) {
+        add(GetAllTasks());
+        return;
+      }
+      emit(ErrorState("Erro ao tentar atualizar  tarefa"));
+    });
+
+    on<deleteTask>((event, emit) async {
+      var resultDelete = await repo.insertTask(event.task);
+      if (resultDelete) {
+        add(GetAllTasks());
+        return;
+      }
+      emit(ErrorState("Erro ao tentar deletar tarefa"));
     });
   }
 }

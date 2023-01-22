@@ -60,7 +60,18 @@ class _MobxHomeState extends State<BlocHome> {
                 ),
               ),
               Expanded(
-                  child: BlocBuilder<TaskBloc, TaskState>(
+                  child: BlocConsumer<TaskBloc, TaskState>(
+                listener: (context, state) {
+                  if (state is ErrorState) {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text(state.messageError),
+                          );
+                        });
+                  }
+                },
                 bloc: bloc,
                 builder: (context, state) {
                   if (state is TaskInitial) {
@@ -85,7 +96,9 @@ class _MobxHomeState extends State<BlocHome> {
                                 Row(
                                   children: [
                                     GestureDetector(
-                                      onTap: () async {},
+                                      onTap: () async {
+                                        bloc.add(updateTask(task));
+                                      },
                                       child: Icon(
                                           task.isFinished
                                               ? Icons.check
@@ -95,7 +108,9 @@ class _MobxHomeState extends State<BlocHome> {
                                               : Colors.red),
                                     ),
                                     GestureDetector(
-                                      onTap: () async {},
+                                      onTap: () async {
+                                        bloc.add(deleteTask(task));
+                                      },
                                       child: const Icon(Icons.delete,
                                           color: Colors.red),
                                     )
